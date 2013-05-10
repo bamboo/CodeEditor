@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CodeEditor.Composition;
+using CodeEditor.Text.UI.Unity.Engine;
 using CodeEditor.Text.UI.Unity.Engine.Implementation;
 using UnityEditor;
 using UnityEngine;

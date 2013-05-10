@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Collections.Generic;
-using CodeEditor.Text.UI.Unity.Engine.Implementation;
+using CodeEditor.Text.UI.Unity.Engine;
 using UnityEngine;
 
 namespace CodeEditor.Text.UI.Unity.Editor.Implementation.ListPopup

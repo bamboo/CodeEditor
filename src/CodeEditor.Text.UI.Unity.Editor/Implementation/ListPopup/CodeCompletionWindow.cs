@@ -117,40 +117,39 @@ namespace CodeEditor.Text.UI.Unity.Editor.Implementation.ListPopup
 
 		void KeyboardHandling (List<IListItem> items)
 		{
-			Event evt = Event.current;
+			var evt = Event.current;
+			if (evt.type != EventType.KeyDown)
+				return;
 
-			if (evt.type == EventType.KeyDown && evt.keyCode == KeyCode.Escape)
+			if (evt.keyCode == KeyCode.Escape)
 				Cancel();
 
-			if (evt.type == EventType.KeyDown && (evt.keyCode == KeyCode.Return || evt.keyCode == KeyCode.KeypadEnter))
+			if ((evt.keyCode == KeyCode.Return || evt.keyCode == KeyCode.KeypadEnter))
 				UseSelectedWord();
-
-			if (Event.current.type == EventType.KeyDown)
+			
+			var offset = 0;
+			switch (evt.keyCode)
 			{
-				int offset = 0;
-				switch (Event.current.keyCode)
-				{
-					case KeyCode.DownArrow:
-						offset = 1;
-						break;
-					case KeyCode.UpArrow:
-						offset = -1;
-						break;
-				}
-				if (offset != 0)
-				{
-					if (_input.m_SelectedListIndex < 0 && offset < 0)
-						Select(items.Count - 1);
-					else
-						Select((_input.m_SelectedListIndex + offset) % items.Count);
-					Event.current.Use();
-				}
+				case KeyCode.DownArrow:
+					offset = 1;
+					break;
+				case KeyCode.UpArrow:
+					offset = -1;
+					break;
+			}
+			if (offset != 0)
+			{
+				if (_input.m_SelectedListIndex < 0 && offset < 0)
+					Select(items.Count - 1);
 				else
-				{
-					const bool requireKeyboardFocus = false;
-					_input.m_CodeView.HandleKeyboard(requireKeyboardFocus);
-					_input.m_CodeView.Repaint();
-				}
+					Select((_input.m_SelectedListIndex + offset) % items.Count);
+				Event.current.Use();
+			}
+			else
+			{
+				const bool requireKeyboardFocus = false;
+				_input.m_CodeView.HandleKeyboard(requireKeyboardFocus);
+				_input.m_CodeView.Repaint();
 			}
 		}
 
@@ -265,11 +264,5 @@ namespace CodeEditor.Text.UI.Unity.Editor.Implementation.ListPopup
 			
 			return activeBorders.ToArray();
 		}
-
-
-
-
-		
-
 	}
 }

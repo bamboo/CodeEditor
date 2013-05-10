@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace CodeEditor.Text.UI.Unity.Engine.Implementation
+namespace CodeEditor.Text.UI.Unity.Engine
 {
 	public interface IIcons
 	{

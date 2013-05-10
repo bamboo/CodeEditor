@@ -84,26 +84,26 @@ namespace CodeEditor.Text.UI.Unity.Editor.Implementation
 
 		public void OnGUI()
 		{
-			if (_state == State.ShowWindow)
+			if (_state != State.ShowWindow)
+				return;
+
+			_state = State.Idle;
+
+			if (_word.Length == 0)
 			{
-				_state = State.Idle; 
-
-				if (_word.Length == 0)
-				{
-					CodeCompletionWindow.CloseList();
-					return;
-				}
-
-				var input = new CodeCompletionWindowInput();
-				var provider = new CodeCompletionListItemProvider(_word);
-				input.m_ItemProvider = provider;
-				input.m_ItemGUI = new CodeCompletionListItemGUI(18, provider);
-				input.m_OnSelectCallback += CodeCompletionCallback;
-				input.m_SelectedListIndex = 0; // Use -1 for invisible marker when showing
-				input.m_CodeView = _codeView;
-
-				CodeCompletionWindow.ShowAtPosition(_wordScreenRect, input, _textView.Settings);
+				CodeCompletionWindow.CloseList();
+				return;
 			}
+
+			var input = new CodeCompletionWindowInput();
+			var provider = new CodeCompletionListItemProvider(_word);
+			input.m_ItemProvider = provider;
+			input.m_ItemGUI = new CodeCompletionListItemGUI(18, provider);
+			input.m_OnSelectCallback += CodeCompletionCallback;
+			input.m_SelectedListIndex = 0; // Use -1 for invisible marker when showing
+			input.m_CodeView = _codeView;
+
+			CodeCompletionWindow.ShowAtPosition(_wordScreenRect, input, _textView.Settings);
 		}
 
 		void CodeCompletionCallback(IListItem selectedItem, int selectedIndex)
